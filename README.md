@@ -19,7 +19,7 @@ You can install this app using the [bench](https://github.com/frappe/bench) CLI:
 
 ```bash
 cd $PATH_TO_YOUR_BENCH
-bench get-app https://github.com/Satish/smart_biometric --branch version-16
+bench get-app https://github.com/asoral/smart_biometric.git --branch version-16
 bench install-app smart_biometric
 ```
 
