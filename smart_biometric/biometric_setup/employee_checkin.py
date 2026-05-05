@@ -4,6 +4,7 @@ from frappe.utils.data import get_datetime
 @frappe.whitelist(allow_guest=True)
 def employee_checkin(emp_id, time, device_id):
     try:
+        geolocation_enable=frappe.get_single_value("HR Settings", "allow_geolocation_tracking")
         if not emp_id or not time or not device_id:
             return {
                 "isSuccess": 0,
@@ -29,6 +30,11 @@ def employee_checkin(emp_id, time, device_id):
         checkin.time = time
         checkin.device_id = device_id
         checkin.log_type = "IN"
+        checkin.custom_is_smart_biometric = 1
+        if geolocation_enable:
+            checkin.latitude = frappe.get_single_value("HR Settings", "custom_latitude")
+            checkin.longitude = frappe.get_single_value("HR Settings", "custom_longitude")
+
         checkin.save(ignore_permissions=True)
         frappe.db.commit()
 
